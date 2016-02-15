@@ -29,7 +29,7 @@ function erreur {
     # On emet le message d'aide si commande fournie invalide.
     # Par contre, ce message doit etre emis sur stdout.
     [[ $msg =~ Commande\ inconnue ]] && aide
-    
+
     exit 1
 }
 
@@ -56,7 +56,7 @@ COMMANDES
   indiquer_perte - Indique la perte du livre indique
   lister         - Emet l'ensemble des livres empruntes
   rapporter      - Indique le retour d'un livre
-  trouver        - Trouve le titre complet d'un livre 
+  trouver        - Trouve le titre complet d'un livre
                    ou les titres qui contiennent la chaine
 EOF
 }
@@ -105,14 +105,20 @@ function init {
 ###################################################
 
 function lister {
-#Guy Tremblay :: [ Hunt et Thomas ] "Programming Ruby"
     awk -F'%' '{print $1 " :: [ "$4 " ] \""$3"\"" }' $depot
-
 }
 
 
 function emprunter {
-   echo $@ 
+    $( echo -n $2 >> $depot )
+    $( echo -n %  >> $depot )
+    $( echo -n $3 >> $depot )
+    $( echo -n %  >> $depot )
+    $( echo -n $4 >> $depot )
+    $( echo -n %  >> $depot )
+    $( echo    $5 >> $depot )
+
+    return 4
 }
 
 function emprunteur {
@@ -206,8 +212,8 @@ case $commande in
         trouver $depot "$@"
         shift $?
         ;;
-    
-    *) 
+
+    *)
         erreur "Commande inconnue: '$commande'"
         ;;
 esac
