@@ -105,7 +105,9 @@ function init {
 ###################################################
 
 function lister {
-    awk -F'%' '{print $1 " :: [ "$4 " ] \""$3"\"" }' $depot
+    awk -F'%' '{ printf "%-10s\n", $1 " :: [ "$4 "   ] \""$3"\"" }' $depot
+
+    $( sort $depot -o $depot )
 }
 
 
@@ -122,15 +124,28 @@ function emprunter {
 }
 
 function emprunteur {
-    return 0
+    emprunteur=$( awk -F'%' -v str="$2"  '{ if( $3 == str ) { print $1 } }' $depot )
+
+    if [ "$emprunteur" = "" ]; then
+        echo "Erreur: Aucun livre emprunte avec le titre '$2'."
+    fi
+
+    return 1
 }
 
 function trouver {
-    return 0
+    #QUESTION  fonctions string ok?
+    livres=$( awk -F'%' -v str="$2" '{ if( match(tolower($3), tolower(str) ) ) { print $3 } }' $depot )
+    echo $livres
+
+    return 1
 }
 
 function emprunts {
-    return 0
+    emprunteur=$( awk -F'%' -v str="$2"  '{ if( $1 == str ) { print $3 } }' $depot )
+    echo $emprunteur | xargs echo
+
+    return 1
 }
 
 function rapporter {
