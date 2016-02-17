@@ -178,7 +178,14 @@ function rapporter {
         exit 1
     fi
 
-    awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
+    awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp
+
+    if [[ $( diff $depot.tmp $depot ) == "" ]] ; then
+        >&2 echo "Aucun.*livre.*emprunte.* $2"
+        exit 1
+    fi
+
+    mv $depot.tmp $depot
     $( sort $depot -o $depot )
 
     return $(( $# - 1 ))
