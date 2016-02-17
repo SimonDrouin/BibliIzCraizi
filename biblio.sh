@@ -112,7 +112,6 @@ function lister {
 function emprunter {
     if [[ "$#" != 5 ]] ; then
         >&2 echo "Nombre incorrect d'arguments"
-        >&2 echo $@
         exit 1
     fi
 
