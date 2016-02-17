@@ -154,7 +154,7 @@ function emprunts {
 }
 
 function rapporter {
-    $( echo awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot )
+    awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
     $( sort $depot -o $depot )
 
     return 1
