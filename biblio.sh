@@ -112,6 +112,7 @@ function lister {
 function emprunter {
     if [[ "$#" != 5 ]] ; then
         >&2 echo "Nombre incorrect d'arguments"
+        >&2 echo $@
         exit 1
     fi
 
@@ -158,7 +159,6 @@ function trouver {
         exit 1
     fi
 
-    #QUESTION  fonctions string ok?
     awk -F'%' -v str="$2" '{ if( match(tolower($3), tolower(str) ) ) { print $3 } }' $depot
 
     return $(( $# - 1 ))
