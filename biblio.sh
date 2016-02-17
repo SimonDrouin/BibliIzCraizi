@@ -117,7 +117,7 @@ function emprunter {
 
     # check if book already took
     if [[ $( trouver $depot $4 ) ]] ; then
-        >&2 echo "livre.*avec.*meme titre.*deja emprunte"
+        >&2 echo "livre avec meme titre deja emprunte"
         exit 1
     fi
 
@@ -143,7 +143,7 @@ function emprunteur {
     emprunteur=$( awk -F'%' -v str="$2"  '{ if( $3 == str ) { print $1 } }' $depot )
 
     if [[ "$emprunteur" = "" ]] ; then
-        echo "Aucun livre emprunte $2"
+        >&2 echo "Aucun livre emprunte $2"
         exit 1
     fi
 
@@ -154,7 +154,6 @@ function emprunteur {
 
 function trouver {
     if [[ "$#" != 2 ]] ; then
-        echo "$@"
         >&2 echo "Nombre incorrect d'arguments"
         exit 1
     fi
