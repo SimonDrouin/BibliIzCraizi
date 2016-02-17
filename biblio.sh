@@ -105,7 +105,7 @@ function init {
 ###################################################
 
 function lister {
-    awk -F'%' '{ printf "%-10s\n", $1 " :: [ "$4 "   ] \""$3"\"" }' $depot
+    awk -F'%' '{ printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\"" }' $depot
 
     $( sort $depot -o $depot )
 }
@@ -120,6 +120,8 @@ function emprunter {
     $( echo -n %  >> $depot )
     $( echo    $5 >> $depot )
 
+
+    # QUESTION   hardcode return value ???
     return 4
 }
 
@@ -135,8 +137,7 @@ function emprunteur {
 
 function trouver {
     #QUESTION  fonctions string ok?
-    livres=$( awk -F'%' -v str="$2" '{ if( match(tolower($3), tolower(str) ) ) { print $3 } }' $depot )
-    echo $livres
+    awk -F'%' -v str="$2" '{ if( match(tolower($3), tolower(str) ) ) { print $3 } }' $depot
 
     return 1
 }
@@ -149,7 +150,11 @@ function emprunts {
 }
 
 function rapporter {
-    return 0
+    livres_empruntes=$( awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot)
+
+    echo $livres_empruntes > $depot
+
+    return 1
 }
 
 
@@ -176,7 +181,6 @@ function indiquer_perte {
 depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
 
 debug "On utilise le depot suivant:", $depot
-
 
 #
 # On analyse la commande (= dispatcher).
