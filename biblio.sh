@@ -110,10 +110,9 @@ function lister {
 
 
 function emprunter {
-    # QUESTION comment gerer les arguments invalides?
-    if [[ "$#" != 4 ]] ; then
+    if [[ "$#" != 5 ]] ; then
         echo "Nombre incorrect d'arguments"
-        return $#
+        return $(( $# - 1 ))
     fi
 
     $( echo -n $2 >> $depot )
@@ -126,43 +125,62 @@ function emprunter {
 
     $( sort $depot -o $depot )
 
-    # QUESTION   hardcode return value ???
-    return 4
+    return $(( $# - 1 ))
 }
 
 function emprunteur {
+    if [[ "$#" != 2 ]] ; then
+        echo "Nombre incorrect d'arguments"
+        return $(( $# - 1 ))
+    fi
+
     emprunteur=$( awk -F'%' -v str="$2"  '{ if( $3 == str ) { print $1 } }' $depot )
 
     if [ "$emprunteur" = "" ]; then
         echo "Erreur: Aucun livre emprunte avec le titre '$2'."
     fi
 
-    return 1
+    return $(( $# - 1 ))
 }
 
 function trouver {
+    if [[ "$#" != 2 ]] ; then
+        echo "Nombre incorrect d'arguments"
+        return $(( $# - 1 ))
+    fi
+
     #QUESTION  fonctions string ok?
     awk -F'%' -v str="$2" '{ if( match(tolower($3), tolower(str) ) ) { print $3 } }' $depot
 
-    return 1
+    return $(( $# - 1 ))
 }
 
 function emprunts {
+    if [[ "$#" != 2 ]] ; then
+        echo "Nombre incorrect d'arguments"
+        return $(( $# - 1 ))
+    fi
+
     awk -F'%' -v str="$2"  '{ if( $1 == str ) { print $3 } }' $depot
 
-    return 1
+    return $(( $# - 1 ))
 }
 
 function rapporter {
+    if [[ "$#" != 2 ]] ; then
+        echo "Nombre incorrect d'arguments"
+        return $(( $# - 1 ))
+    fi
+
     awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
     $( sort $depot -o $depot )
 
-    return 1
+    return $(( $# - 1 ))
 }
 
 
 function indiquer_perte {
-    return 0
+    return $(( $# - 1 ))
 }
 
 #######################################################
