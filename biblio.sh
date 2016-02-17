@@ -115,6 +115,12 @@ function emprunter {
         exit 1
     fi
 
+    # check if book already took
+    if [[ $( trouver $depot $4 ) ]] ; then
+        echo "livre.*avec.*meme titre.*deja emprunte"
+        exit 1
+    fi
+
     $( echo -n $2 >> $depot )
     $( echo -n %  >> $depot )
     $( echo -n $3 >> $depot )
