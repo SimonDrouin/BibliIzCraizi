@@ -181,7 +181,7 @@ function rapporter {
     awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp
 
     if [[ $( diff $depot.tmp $depot ) == "" ]] ; then
-        >&2 echo "Aucun.*livre.*emprunte.* $2"
+        >&2 echo "Aucun livre avec le titre $2"
         exit 1
     fi
 
