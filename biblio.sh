@@ -110,6 +110,12 @@ function lister {
 
 
 function emprunter {
+    # QUESTION comment gerer les arguments invalides?
+    if [[ "$2" == "" || "$3" == "" || "$4" == "" || "$5" == "" ]] ; then
+        echo "Arguments invalides"
+        return 4
+    fi
+
     $( echo -n $2 >> $depot )
     $( echo -n %  >> $depot )
     $( echo -n $3 >> $depot )
@@ -148,7 +154,7 @@ function emprunts {
 }
 
 function rapporter {
-    awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot
+    $( echo awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot )
     $( sort $depot -o $depot )
 
     return 1
