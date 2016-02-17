@@ -1,0 +1,3 @@
+nom1%@%titre1%auteurs1
+nom2%@%titre2%auteurs2
+nom3%@%titre3%auteurs3
