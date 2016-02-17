@@ -116,7 +116,7 @@ function emprunter {
     fi
 
     # check if book already took
-    if [[ $( trouver $depot $4 ) ]] ; then
+    if [[ $( trouver $depot "$4" ) ]] ; then
         >&2 echo "livre avec meme titre deja emprunte"
         exit 1
     fi
