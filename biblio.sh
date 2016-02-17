@@ -142,8 +142,8 @@ function emprunteur {
 
     emprunteur=$( awk -F'%' -v str="$2"  '{ if( $3 == str ) { print $1 } }' $depot )
 
-    if [ "$emprunteur" = "" ]; then
-        echo "Erreur: Aucun livre emprunte avec le titre '$2'."
+    if [[ "$emprunteur" = "" ]] ; then
+        echo "Aucun livre emprunte $2"
     fi
 
     return $(( $# - 1 ))
