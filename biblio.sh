@@ -120,6 +120,7 @@ function emprunter {
     $( echo -n %  >> $depot )
     $( echo    $5 >> $depot )
 
+    $( sort $depot -o $depot )
 
     # QUESTION   hardcode return value ???
     return 4
