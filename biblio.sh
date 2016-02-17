@@ -143,7 +143,7 @@ function trouver {
 }
 
 function emprunts {
-    emprunteur=$( awk -F'%' -v str="$2"  '{ if( $1 == str ) { print $3 } }' $depot )
+    emprunteur=$( awk -F'%' -v str="$2"  '{ if( $1 == str ) { printf $3 } }' $depot )
     echo $emprunteur | xargs echo
 
     return 1
