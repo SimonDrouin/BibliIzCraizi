@@ -144,7 +144,10 @@ function emprunteur {
 
     if [[ "$emprunteur" = "" ]] ; then
         echo "Aucun livre emprunte $2"
+        exit 1
     fi
+
+    echo $emprunteur
 
     return $(( $# - 1 ))
 }
