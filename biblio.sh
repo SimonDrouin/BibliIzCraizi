@@ -111,9 +111,9 @@ function lister {
 
 function emprunter {
     # QUESTION comment gerer les arguments invalides?
-    if [[ "$2" == "" || "$3" == "" || "$4" == "" || "$5" == "" ]] ; then
-        echo "Arguments invalides"
-        return 4
+    if [[ "$#" != 4 ]] ; then
+        echo "Nombre incorrect d'arguments"
+        return $#
     fi
 
     $( echo -n $2 >> $depot )
