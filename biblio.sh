@@ -148,9 +148,7 @@ function emprunts {
 }
 
 function rapporter {
-    livres_empruntes=$( awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot)
-
-    echo $livres_empruntes > $depot
+    awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot
     $( sort $depot -o $depot )
 
     return 1
