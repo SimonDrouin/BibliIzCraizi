@@ -130,8 +130,8 @@ function emprunter {
 
 function emprunteur {
     if [[ "$#" != 2 ]] ; then
-        echo "Nombre incorrect d'arguments"
-        return $(( $# - 1 ))
+        >&2 echo "Nombre incorrect d'arguments"
+        exit 1
     fi
 
     emprunteur=$( awk -F'%' -v str="$2"  '{ if( $3 == str ) { print $1 } }' $depot )
@@ -145,8 +145,8 @@ function emprunteur {
 
 function trouver {
     if [[ "$#" != 2 ]] ; then
-        echo "Nombre incorrect d'arguments"
-        return $(( $# - 1 ))
+        >&2 echo "Nombre incorrect d'arguments"
+        exit 1
     fi
 
     #QUESTION  fonctions string ok?
@@ -157,8 +157,8 @@ function trouver {
 
 function emprunts {
     if [[ "$#" != 2 ]] ; then
-        echo "Nombre incorrect d'arguments"
-        return $(( $# - 1 ))
+        >&2 echo "Nombre incorrect d'arguments"
+        exit 1
     fi
 
     awk -F'%' -v str="$2"  '{ if( $1 == str ) { print $3 } }' $depot
@@ -168,8 +168,8 @@ function emprunts {
 
 function rapporter {
     if [[ "$#" != 2 ]] ; then
-        echo "Nombre incorrect d'arguments"
-        return $(( $# - 1 ))
+        >&2 echo "Nombre incorrect d'arguments"
+        exit 1
     fi
 
     awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
