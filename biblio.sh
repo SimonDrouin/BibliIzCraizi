@@ -105,9 +105,7 @@ function init {
 ###################################################
 
 function lister {
-    awk -F'%' '{ printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\"" }' $depot
-
-    $( sort $depot -o $depot )
+    awk -F'%' '{ if( $1 != "" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\"" } }' $depot
 }
 
 
@@ -153,6 +151,7 @@ function rapporter {
     livres_empruntes=$( awk -F'%' -v str="$2" '{ if( str != $3 ) { print $0 } }' $depot)
 
     echo $livres_empruntes > $depot
+    $( sort $depot -o $depot )
 
     return 1
 }
