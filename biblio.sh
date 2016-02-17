@@ -151,6 +151,7 @@ function emprunteur {
 
 function trouver {
     if [[ "$#" != 2 ]] ; then
+        echo "$@"
         >&2 echo "Nombre incorrect d'arguments"
         exit 1
     fi
