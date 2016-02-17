@@ -111,8 +111,8 @@ function lister {
 
 function emprunter {
     if [[ "$#" != 5 ]] ; then
-        echo "Nombre incorrect d'arguments"
-        return $(( $# - 1 ))
+        >&2 echo "Nombre incorrect d'arguments"
+        exit 1
     fi
 
     $( echo -n $2 >> $depot )
