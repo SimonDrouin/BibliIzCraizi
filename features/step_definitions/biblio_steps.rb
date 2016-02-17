@@ -93,6 +93,8 @@ Alors(/il y a(?: maintenant)? (#{UN_NOMBRE}) emprunts?(?: dans "(.*?)")?$/) do |
   cmd = "#{BIBLIO} #{option_depot} lister"
   step %(I run `#{cmd}`)
   nb_lignes = output_from(cmd).chomp.split("\n").size
+  echo "output from :: :::: yay!"
+  echo output_from(cmd)
   expect( nb_lignes ).to eq nb
 end
 
