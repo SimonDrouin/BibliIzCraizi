@@ -228,8 +228,7 @@ case $1 in
 esac
 
 # On definit le depot a utiliser.
-$depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
-
+depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
 #
 # On analyse la commande (= dispatcher).
 #
