@@ -213,10 +213,22 @@ function indiquer_perte {
 # fournis.
 #
 
-# On definit le depot a utiliser.
-depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
+case $1 in
+    --depot=*)
+        depot=$( echo $1 | sed -e 's/^[^=]*=//g' )
 
-debug "On utilise le depot suivant:", $depot
+        if [ ! -f $depot ] ; then
+            echo "$depot n'existe pas"
+            exit 1
+        fi
+        shift 1
+        ;;
+    *)
+    ;;
+esac
+
+# On definit le depot a utiliser.
+$depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
 
 #
 # On analyse la commande (= dispatcher).
