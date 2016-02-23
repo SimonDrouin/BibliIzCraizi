@@ -107,7 +107,7 @@ function init {
 
 function lister {
     if [[ $2 == --inclure_perdus ]] ; then
-        awk -F'%' '{ if( $1 != "") { printf $1 " :: " ; printf "[ %-10s ] ", $4 ; print "\""$3"\" "$5} }' $depot
+        awk -F'%' '{ if( $1 != "") { printf "%s :: [ %-10s ] \"%s\"", $1, $4, $3 ; if( $5 == "<<PERDU>>" ) { printf " %s\n", $5 } else { printf "\n" }  } }' $depot
     else
         awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf "%s :: [ %-10s ] \"%s\"\n", $1, $4, $3 } }' $depot
     fi
