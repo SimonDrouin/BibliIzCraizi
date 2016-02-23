@@ -116,7 +116,6 @@ function emprunter {
         exit 1
     fi
 
-    # check if book already took
     if [[ $( trouver $depot "$4" ) ]] ; then
         >&2 echo "livre avec meme titre deja emprunte"
         exit 1
@@ -196,6 +195,7 @@ function rapporter {
 
 
 function indiquer_perte {
+    $( sed -i "/*$2*/ s/$/ PERDU/" $depot )
     return $(( $# - 1 ))
 }
 
