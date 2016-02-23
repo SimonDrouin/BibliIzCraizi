@@ -107,14 +107,13 @@ function init {
 
 function lister {
     if [[ $2 == --inclure_perdus ]] ; then
-        awk -F'%' '{ if( $1 != "") { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\""$5} }' $depot
+        awk -F'%' '{ if( $1 != "") { printf $1 " :: " ; printf "[ %-10s ] ", $4 ; print "\""$3"\" "$5} }' $depot
     else
-        awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\" "$5 } }' $depot
+        awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf "%s :: [ %-10s ] \"%s\"\n", $1, $4, $3 } }' $depot
     fi
 
     return $(( $# - 1 ))
 }
-
 
 function emprunter {
     if [[ "$#" != 5 ]] ; then
@@ -127,14 +126,7 @@ function emprunter {
         exit 1
     fi
 
-    $( echo -n $2 >> $depot )
-    $( echo -n %  >> $depot )
-    $( echo -n $3 >> $depot )
-    $( echo -n %  >> $depot )
-    $( echo -n $4 >> $depot )
-    $( echo -n %  >> $depot )
-    $( echo    $5 >> $depot )
-
+    printf "%s%%" "$2" "$3" "$4" "$5" >> $depot
     $( sort $depot -o $depot )
 
     return $(( $# - 1 ))
@@ -200,7 +192,7 @@ function rapporter {
 }
 
 function indiquer_perte {
-    awk -F'%' -v str="$2" 'BEGIN{FS=OFS="%"} { if( $3 == str ) { printf "%s<<PERDU>>\n", $0 } else { printf "%s\n", $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
+    awk -F'%' -v str="$2" 'BEGIN{FS=OFS="%"} { if( $3 == str && $5 != "<<PERDU>>") { printf "%s<<PERDU>>\n", $0 } else { printf "%s\n", $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
     return $(( $# - 1 ))
 }
 
