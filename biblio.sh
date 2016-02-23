@@ -76,6 +76,7 @@ function assert_depot_existe {
 
 function init {
     depot=$1
+
     if [[ $2 =~ --detruire ]]; then
         nb_options=1
     else
@@ -86,7 +87,8 @@ function init {
         # Depot existe deja
         if [[ $nb_options == 1 ]]; then
             # On le detruit quand --detruire est specifie.
-            $( \rm -f $depot )
+            $( rm -f $depot )
+            exit 0
         else
             erreur "Le fichier '$depot' existe. Si vous voulez le detruire, utilisez 'init --detruire'."
         fi
