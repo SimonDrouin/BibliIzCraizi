@@ -218,7 +218,7 @@ case $1 in
     --depot=*)
         depot=$( echo $1 | sed -e 's/^[^=]*=//g' )
 
-        if [ ! -f $depot ] ; then
+        if [ ! -f $depot ] && [ $2 != "init" ] ; then
             >&2 echo "$depot n'existe pas"
             exit 1
         fi
