@@ -88,7 +88,6 @@ function init {
         if [[ $nb_options == 1 ]]; then
             # On le detruit quand --detruire est specifie.
             $( rm -f $depot )
-            exit 0
         else
             erreur "Le fichier '$depot' existe. Si vous voulez le detruire, utilisez 'init --detruire'."
         fi
