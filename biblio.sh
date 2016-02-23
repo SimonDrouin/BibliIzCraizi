@@ -106,7 +106,13 @@ function init {
 ###################################################
 
 function lister {
-    awk -F'%' '{ if( $1 != "" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\"" } }' $depot
+    if [[ $2 =~ "--perdu" ]] ; then
+        awk -F'%' '{ if( $1 != "" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; printf "\""$3"\" " ; print $5} }' $depot
+    else
+        awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\"" } }' $depot
+    fi
+
+    return $(( $# - 1 ))
 }
 
 
@@ -194,7 +200,7 @@ function rapporter {
 }
 
 function indiquer_perte {
-    awk -F'%' -v str="$2" 'BEGIN{FS=OFS="%"} { if( $3 == str ) { $3=$3" <<PERDU>>" } ; printf "%s\n", $0 }' $depot > $depot.tmp && mv $depot.tmp $depot
+    awk -F'%' -v str="$2" 'BEGIN{FS=OFS="%"} { if( $3 == str ) { printf "%s<<PERDU>>\n", $0 } else { printf "%s\n", $0 } }' $depot > $depot.tmp && mv $depot.tmp $depot
     return $(( $# - 1 ))
 }
 
