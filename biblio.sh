@@ -193,9 +193,8 @@ function rapporter {
     return $(( $# - 1 ))
 }
 
-
 function indiquer_perte {
-    $( sed -i "/*$2*/ s/$/ PERDU/" $depot )
+    awk -F'%' -v str="$3" '{ if( $3 == str ) { print $1"%" ; print $2"%" ; print $3"%" ; printf $4 } }' $depot > $depot.tmp && mv $depot.tmp $depot
     return $(( $# - 1 ))
 }
 
