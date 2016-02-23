@@ -106,10 +106,10 @@ function init {
 ###################################################
 
 function lister {
-    if [[ $2 =~ "--perdu" ]] ; then
-        awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; printf "\""$3"\" "; print $5 } }' $depot
+    if [[ $2 == --inclure_perdus ]] ; then
+        awk -F'%' '{ if( $1 != "") { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\""$5} }' $depot
     else
-        awk -F'%' '{ if( $1 != "") { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; printf "\""$3"\""} }' $depot
+        awk -F'%' '{ if( $1 != "" && $5 != "<<PERDU>>" ) { printf $1 " :: " ; printf "%-10s", "[ "$4"   ] " ; print "\""$3"\" "$5 } }' $depot
     fi
 
     return $(( $# - 1 ))
