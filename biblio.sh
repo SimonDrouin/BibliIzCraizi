@@ -208,23 +208,17 @@ function indiquer_perte {
 # arguments et, donc, de verifier si des arguments superflus ont ete
 # fournis.
 #
+if [[ $1 == --depot*  ]] ; then 
+    depot=$( echo $1 | sed -e 's/^[^=]*=//g' )
 
-case $1 in
-    --depot=*)
-        depot=$( echo $1 | sed -e 's/^[^=]*=//g' )
-
-        if [ ! -f $depot ] && [ $2 != "init" ] ; then
-            >&2 echo "$depot n'existe pas"
-            exit 1
-        fi
-        shift 1
-        ;;
-    *)
-    ;;
-esac
-
-# On definit le depot a utiliser.
+    if [ ! -f $depot ] && [ $2 != "init" ] ; then
+        >&2 echo "$depot n'existe pas"
+        exit 1
+    fi
+    shift 1
+fi
 depot=${depot:=.biblio.txt}  # Depot par defaut = .biblio.txt
+
 #
 # On analyse la commande (= dispatcher).
 #
